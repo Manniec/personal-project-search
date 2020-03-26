@@ -23,21 +23,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/** Servlet responsible for creating new tasks. */
-@WebServlet("/new-task")
-public class NewTaskServlet extends HttpServlet {
+/** Servlet responsible for creating new projects. */
+@WebServlet("/post-project")
+public class NewProjectServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String title = request.getParameter("title");
     long timestamp = System.currentTimeMillis();
 
-    Entity taskEntity = new Entity("Task");
+    Entity taskEntity = new Entity("Project");
     taskEntity.setProperty("title", title);
     taskEntity.setProperty("timestamp", timestamp);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-    datastore.put(taskEntity);
+    datastore.put(projectEntity);
 
     response.sendRedirect("/index.html");
   }
