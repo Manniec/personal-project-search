@@ -30,11 +30,13 @@ public class NewProjectServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     String title = request.getParameter("title");
+    String description = request.getParameter("description");
     long timestamp = System.currentTimeMillis();
 
-    Entity taskEntity = new Entity("Project");
-    taskEntity.setProperty("title", title);
-    taskEntity.setProperty("timestamp", timestamp);
+    Entity projectEntity = new Entity("Project");
+    projectEntity.setProperty("title", title);
+    projectEntity.setProperty("description", description);
+    projectEntity.setProperty("timestamp", timestamp);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(projectEntity);

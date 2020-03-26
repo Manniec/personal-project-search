@@ -14,14 +14,14 @@
 
 package com.google.sps.data;
 
-/** An item on a todo list. */
-public final class Task {
+/** Struct of a project. */
+public final class Project {
 
   private final long id;
   private final String title;
   private final long timestamp;
 
-  public Task(long id, String title, long timestamp) {
+  public Project(long id, String title, long timestamp) {
     this.id = id;
     this.title = title;
     this.timestamp = timestamp;
