@@ -1,0 +1,132 @@
+body {
+
+    margin: 0;
+
+}
+
+.spacing {
+
+    height: 100px;
+
+}
+
+.teko-text {
+
+    font-family: 'Teko', sans-serif;
+
+}
+
+.search-header {
+
+    width: 100%;
+    position: fixed;
+
+}
+
+.header-controlls-div {
+
+    background-color: #ffe529;
+    width: fit-content;
+    margin: 3px;
+
+}
+
+.header-controll {
+
+    padding: 5px;
+    color: #171717;
+    font-weight: bold;
+    text-decoration: none;
+    font-size: 1.8vw;
+
+}
+
+.search-section-div {
+
+    width: 100%;
+
+}
+
+.search-section {
+
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+#search-bar-div {
+
+    display: flex;
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+#search-bar {
+
+    margin-top: auto;
+    margin-bottom: auto;
+    border-radius: 15px;
+    cursor: text;
+    border: solid;
+    border-color: #1754a5;
+    padding: 5px;
+
+}
+
+#submit-button {
+
+    width: fit-content;
+    border: none;
+    background: none;
+
+}
+
+#rocket-search {
+
+    width: 50px;
+    cursor: pointer;
+
+}
+
+#search-display-tags-div {
+
+    text-align: right;
+
+}
+
+.tags-display {
+
+
+
+}
+
+.search-display-filters-div {
+
+
+
+}
+
+#tags-div {
+
+    display: flex;
+
+}
+
+.tag-select {
+
+    margin: 5px;
+
+}
+
+@media screen and (max-width: 880px){
+
+    .header-controll{
+
+        font-size: 20px;
+
+    }
+
+}
