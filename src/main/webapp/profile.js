@@ -16,13 +16,37 @@
 
 function loadProfile() {
     fetch('/profile').then(response => response.json()).then((profile) => {
-        const profileElement = document.getElementById("profile");
-        profileElement.appendChild(createProfileElement(profile));
+
+        // initialize elements
+        const nameElement = document.getElementById("name");
+        const contactInfoElement = document.getElementById("contact-info");
+        const reviewListElement = document.getElementById("review-list");
+        const projectListElement = document.getElementById("project-list");
+
+        // display profile
+        nameElement.innerText = profile.name;
+        console.log(profile.name);
+        contactInfoElement.innerHTML = profile.contactInfo.Email + "<br/>" + profile.contactInfo.Mobile;
+        console.log(profile.contactInfo.Email + "<br/>" + profile.contactInfo.Mobile);
+        for (var i = 0; i < profile.projectHistory.length; i++) {
+            const projectElement = document.createElement('li');
+            projectElement.innerText = profile.projectHistory[i];
+            console.log(profile.projectHistory[i]);
+            projectElement.className = 'horiz-center';
+            projectListElement.appendChild(projectElement);
+        }
+        for (var i = 0; i < profile.reviews.length; i++) {
+            const reviewElement = document.createElement('li');
+            reviewElement.innerText = profile.reviews[i];
+            console.log(profile.reviews[i]);
+            reviewElement.className = 'horiz-center';
+            reviewListElement.appendChild(reviewElement);
+        }
     });
 }
 
 function createProfileElement(profile){
-
+    const profileElement = document.createElement('li');
 }
 /** Fetches tasks from the server and adds them to the DOM. */
 function loadTasks() {

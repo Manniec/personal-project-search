@@ -5,10 +5,18 @@ html, body {
     width: 75%;
     padding: 0px;
     text-align: center;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .circular-square {
     border-radius: 50%;
+}
+
+.horiz-center {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
 }
 
 #avatar{
