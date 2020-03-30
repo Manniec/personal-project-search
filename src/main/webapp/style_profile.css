@@ -1,0 +1,16 @@
+html, body {
+    background-color: #DCDCDC; 
+    margin: 0;   
+    scroll-behavior: smooth;
+    width: 75%;
+    padding: 0px;
+    text-align: center;
+}
+
+.circular-square {
+    border-radius: 50%;
+}
+
+#avatar{
+    height: 300px;
+}
