@@ -11,7 +11,7 @@
     <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
     <script src="search.js"></script>
   </head>
-  <body>
+  <body onload = "getAllProjects()">
 
       <header class = "search-header">
 
@@ -31,7 +31,7 @@
 
           <div class = "search-section">
 
-              <form action = "/search" method = "get" id = "search-form">
+              <form action = "/search" method = "GET" id = "search-form">
               
                 <div id = "search-bar-div">
 
