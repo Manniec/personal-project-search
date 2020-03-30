@@ -5,7 +5,7 @@ public class SearchProject {
     private String title;
     private String[] tags;
     private String author;
-    private String image = null;
+    private String image = "default";
 
     //Default class constructor:
 
@@ -18,7 +18,12 @@ public class SearchProject {
         this.title = title;
         this.tags = tags;
         this.author = author;
-        this.image = image;
+
+        if(image != null){
+
+            this.image = image;
+
+        }
 
     }
 

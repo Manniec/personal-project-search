@@ -43,12 +43,17 @@ public class SearchServlet extends HttpServlet {
         String[] project6List = {"Japanese", "Asia/Tokyo", "Hard", "Online"};
         SearchProject project6 = new SearchProject("Test Project 6", project6List, "Takumi Fujiwara", null);
 
+        String[] project7List = {"Japanese", "Asia/Tokyo", "Hard", "Online"};
+        SearchProject project7 = new SearchProject("Test Project 6", project7List, "Takumi Fujiwara", null);
+
         projectData.add(project1);
         projectData.add(project2);
         projectData.add(project3);
         projectData.add(project4);
         projectData.add(project5);
         projectData.add(project6);
+        projectData.add(project7);
+        projectData.add(project7);
 
         String json = toJsonString(projectData);
 
