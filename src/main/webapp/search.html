@@ -6,6 +6,7 @@
     <title>Search</title>
     <link rel="stylesheet" href="search.css">
     <link href="https://fonts.googleapis.com/css?family=Teko&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Karla&display=swap" rel="stylesheet">
     <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
     <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
     <script src="search.js"></script>
@@ -34,7 +35,7 @@
               
                 <div id = "search-bar-div">
 
-                    <input type = "text" name = "bar" id = "search-bar" placeholder="Search for a project!">
+                    <input type = "text" name = "bar" id = "search-bar" class = "karla-text" placeholder="Search for a project!">
 
                     <button type = "submit" id = "submit-button">
 
@@ -46,21 +47,21 @@
 
                 <div id = "search-display-tags-div">
 
-                    <label id = "tags-display">#Test #Test #Test</label>
+                    <label id = "tags-display" class = "karla-text">#Test #Test #Test</label>
 
                 </div>
 
                 <div id = "search-display-filters-div">
 
-                    <h4 id = "tags-title">TAGS:</h4>
+                    <h4 id = "tags-title" class = "karla-text">TAGS:</h4>
 
                     <div id = "tags-div">
 
                         <div class = "tag-select">
 
-                            <h5 class = "tag-select-title">Language:</h5>
+                            <h5 class = "tag-select-title karla-text">Language:</h5>
 
-                            <input list = "languages" name = "tag-languages" id = "tag-languages-input">
+                            <input class = "tags-input-box" list = "languages" name = "tag-languages" id = "tag-languages-input">
 
                                 <datalist id = "languages">
 
@@ -76,9 +77,9 @@
 
                         <div class = "tag-select">
 
-                            <h5 class = "tag-select-title">Time Zone:</h5>
+                            <h5 class = "tag-select-title karla-text">Time Zone:</h5>
 
-                            <input list = "time-zones" name = "tag-zones" id = "tag-zones-input">
+                            <input class = "tags-input-box" list = "time-zones" name = "tag-zones" id = "tag-zones-input">
 
                                 <datalist id = "time-zones">
 
@@ -171,9 +172,9 @@
 
                         <div class = "tag-select">
 
-                            <h5 class = "tag-select-title">Difficulty:</h5>
+                            <h5 class = "tag-select-title karla-text">Difficulty:</h5>
 
-                            <select id = "difficulty-input" name = "difficulties">
+                            <select class = "tags-input-box" id = "difficulty-input" name = "difficulties">
 
                                 <option value = "default" selected disabled hidden>select</option>
                                 <option value = "easy">Easy</option>
@@ -187,9 +188,9 @@
 
                         <div class = "tag-select">
 
-                            <h5 class = "tag-select-title">Time Commitment:</h5>
+                            <h5 class = "tag-select-title karla-text">Time Commitment:</h5>
 
-                            <select id = "time-commitment-input" name = "time-commitment">
+                            <select class = "tags-input-box" id = "time-commitment-input" name = "time-commitment">
 
                                 <option value = "default" selected disabled hidden>select</option>
                                 <option value = "less 1">Less than 1 hour</option>
@@ -204,9 +205,9 @@
 
                         <div class = "tag-select">
 
-                            <h5 class = "tag-select-title">Collab Type:</h5>
+                            <h5 class = "tag-select-title karla-text">Collab Type:</h5>
 
-                            <select id = "collab-type-input" name = "collab-type">
+                            <select class = "tags-input-box" id = "collab-type-input" name = "collab-type">
 
                                 <option value = "default" selected disabled hidden>select</option>
                                 <option value = "presential">Presential</option>
@@ -222,6 +223,134 @@
                 </div>
 
               </form>
+
+          </div>
+
+      </div>
+
+      <div id = "projects-display-section">
+
+          <div class = "projects-row">
+
+              <div class = "content-row">
+
+                <div class = "project-card">
+
+                    <div class = "project-image-div">
+
+                
+
+                    </div>
+
+                    <div class = "project-decription">
+
+                        <h4 class = "project-title teko-text">This is a test project</h4>
+                        <p class = "project-tags karla-text">#Test #Test #Test #Test</p>
+                        <h5 class = "project-author karla-text">John Doe</h5>
+
+                    </div>
+
+                </div>
+
+                <div class = "project-card">
+
+                    <div class = "project-image-div">
+
+                
+
+                    </div>
+
+                    <div class = "project-decription">
+
+                        <h4 class = "project-title teko-text">This is a test project</h4>
+                        <p class = "project-tags karla-text">#Test #Test #Test #Test</p>
+                        <h5 class = "project-author karla-text">John Doe</h5>
+
+                    </div>
+
+                </div>
+
+                <div class = "project-card">
+
+                    <div class = "project-image-div">
+
+                
+
+                    </div>
+
+                    <div class = "project-decription">
+
+                        <h4 class = "project-title teko-text">This is a test project</h4>
+                        <p class = "project-tags karla-text">#Test #Test #Test #Test</p>
+                        <h5 class = "project-author karla-text">John Doe</h5>
+
+                    </div>
+
+                </div>
+
+              </div>
+
+          </div>
+
+          <div class = "projects-row">
+
+              <div class = "content-row">
+
+                <div class = "project-card">
+
+                    <div class = "project-image-div">
+
+                
+
+                    </div>
+
+                    <div class = "project-decription">
+
+                        <h4 class = "project-title teko-text">This is a test project</h4>
+                        <p class = "project-tags karla-text">#Test #Test #Test #Test</p>
+                        <h5 class = "project-author karla-text">John Doe</h5>
+
+                    </div>
+
+                </div>
+
+                <div class = "project-card">
+
+                    <div class = "project-image-div">
+
+                
+
+                    </div>
+
+                    <div class = "project-decription">
+
+                        <h4 class = "project-title teko-text">This is a test project</h4>
+                        <p class = "project-tags karla-text">#Test #Test #Test #Test</p>
+                        <h5 class = "project-author karla-text">John Doe</h5>
+
+                    </div>
+
+                </div>
+
+                <div class = "project-card">
+
+                    <div class = "project-image-div">
+
+                
+
+                    </div>
+
+                    <div class = "project-decription">
+
+                        <h4 class = "project-title teko-text">This is a test project</h4>
+                        <p class = "project-tags karla-text">#Test #Test #Test #Test</p>
+                        <h5 class = "project-author karla-text">John Doe</h5>
+
+                    </div>
+
+                </div>
+
+              </div>
 
           </div>
 
