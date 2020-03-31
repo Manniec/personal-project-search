@@ -32,11 +32,13 @@ public class NewProjectServlet extends HttpServlet {
     String title = request.getParameter("title");
     String description = request.getParameter("description");
     long timestamp = System.currentTimeMillis();
+    String giturl = request.getParameter("giturl");
 
     Entity projectEntity = new Entity("Project");
     projectEntity.setProperty("title", title);
     projectEntity.setProperty("description", description);
     projectEntity.setProperty("timestamp", timestamp);
+    projectEntity.setProperty("giturl", giturl);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(projectEntity);
