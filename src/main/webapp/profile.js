@@ -13,7 +13,7 @@
 // limitations under the License.
 
 
-
+/** Fetches the profile from the server and adds them to the DOM. */
 function loadProfile() {
     fetch('/profile').then(response => response.json()).then((profile) => {
 
@@ -43,11 +43,26 @@ function loadProfile() {
             reviewListElement.appendChild(reviewElement);
         }
     });
+    loggingIn();
 }
 
-function createProfileElement(profile){
-    const profileElement = document.createElement('li');
+function loggingIn(){
+    fetch('authentication').then(response => response.json()).then((authentication) =>{
+        const contactInfoElement = document.getElementById("contact-info");
+        const logoutElement = document.getElementById("logout");
+        var isLoggedIn = (authentication.isLoggedIn == 'true'); 
+        var loginUrl = authentication.login;
+        var logoutUrl = authentication.logout;
+        if(isLoggedIn){
+            contactInfoElement.display = "inline";
+            logoutElement.innerHTML = "<p>Logout <a href=\"" + logoutUrl + "\">here</a>.</p>"
+
+        } else {
+            contactInfoElement.innerHTML = "Login <a href=\"" + loginUrl + "\">here</a> to see the contact info.";
+        }
+    });
 }
+
 /** Fetches tasks from the server and adds them to the DOM. */
 function loadTasks() {
   fetch('/list-tasks').then(response => response.json()).then((tasks) => {

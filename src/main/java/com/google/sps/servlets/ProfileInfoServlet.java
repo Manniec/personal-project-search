@@ -15,14 +15,7 @@
 package com.google.sps.servlets;
 
 import com.google.sps.data.Profile;
-import com.google.appengine.api.datastore.DatastoreService;
-import com.google.appengine.api.datastore.DatastoreServiceFactory;
-import com.google.appengine.api.datastore.Entity;
-import com.google.appengine.api.datastore.PreparedQuery;
-import com.google.appengine.api.datastore.Query;
-import com.google.appengine.api.datastore.Query.SortDirection;
 import com.google.gson.Gson;
-import com.google.sps.data.Task;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -34,11 +27,10 @@ import javax.servlet.http.HttpServletResponse;
 
 /** Servlet responsible for listing tasks. */
 @WebServlet("/profile")
-public class ProfileInformation extends HttpServlet {
+public class ProfileInfoServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    Query query = new Query("Task").addSort("timestamp", SortDirection.DESCENDING);
 
     // initialize Profile with dummy data
     String name = "John Doe";
