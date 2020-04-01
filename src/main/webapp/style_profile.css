@@ -33,7 +33,7 @@ html, body {
 
 #avatar {
 
-    height: 300px;
+    height: 175px;
 
 }
 
@@ -165,5 +165,14 @@ html, body {
 .karla-text {
 
     font-family: 'Karla', sans-serif;
+
+}
+
+#tags-title {
+
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 20px;
+    color: white;
 
 }
