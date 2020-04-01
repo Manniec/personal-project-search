@@ -44,8 +44,9 @@ public class AuthenticationServlet extends HttpServlet {
       UserService userService = UserServiceFactory.getUserService();
       // initialize data
       Boolean isLoggedIn = userService.isUserLoggedIn();
-      String logoutUrl = userService.createLogoutURL("/");
-      String loginUrl = userService.createLoginURL("/");
+      String redirectLink = "/profile.html";
+      String logoutUrl = userService.createLogoutURL(redirectLink);
+      String loginUrl = userService.createLoginURL(redirectLink);
       HashMap<String, String> authentication = new HashMap<String, String>();
       authentication.put("isLoggedIn", Boolean.toString(isLoggedIn));
       authentication.put("logout", logoutUrl);

@@ -4,11 +4,30 @@
     <meta charset="UTF-8">
     <title>Profile</title>
     <link rel="stylesheet" href="style_profile.css">
+    <link href="https://fonts.googleapis.com/css?family=Teko&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Karla&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="/images/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="/images/favicon.ico" type="image/x-icon">
     <script src="profile.js"></script>
   </head>
     <body onload="loadProfile()">
-        <div id="logout"></div>
-        <table>
+        <header class = "search-header">
+
+          <div class = "header-controlls-div">
+
+              <a class = "header-controll teko-text" href = "#">LANDING</a>
+              <a class = "header-controll teko-text" href = "#">PROFILE</a>
+              <a class = "header-controll teko-text" href = "#">CREATE</a>
+              <a class = "header-controll teko-text" href = "#" id="logging">LOG</a>
+
+
+          </div>
+
+      </header>
+
+      <div class = "spacing"></div>
+        <!-- <div id="logout"></div> -->
+        <table id="profile-info">
             <tr>
                 <img id="avatar" class="circular-square" 
                 src="https://www.axiumradonmitigations.com/wp-content/uploads/2015/01/icon-user-default.png">
@@ -20,13 +39,16 @@
                 <p id="contact-info">Contact Info</p>
             </tr>
             <tr>
-                <td>
+                <!-- <td>
                     <ul id="project-list">Project History</ul>
-                </td>
+                    
+                </td> -->
                 <td>
                     <ul id="review-list">Reviews</ul>
                 </td>
             </tr>
         </table>
+        <div id = "projects-display-section">
+        </div>
     </body>
 </html>

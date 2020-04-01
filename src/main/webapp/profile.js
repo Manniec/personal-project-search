@@ -21,13 +21,18 @@ function loadProfile() {
         const nameElement = document.getElementById("name");
         const contactInfoElement = document.getElementById("contact-info");
         const reviewListElement = document.getElementById("review-list");
-        const projectListElement = document.getElementById("project-list");
+        // const projectListElement = document.getElementById("project-list");
 
         // display profile
         nameElement.innerText = profile.name;
         console.log(profile.name);
         contactInfoElement.innerHTML = profile.contactInfo.Email + "<br/>" + profile.contactInfo.Mobile;
         console.log(profile.contactInfo.Email + "<br/>" + profile.contactInfo.Mobile);
+        contactInfoElement.display = "none";
+
+        
+        /*
+        Below is ommited for now
         for (var i = 0; i < profile.projectHistory.length; i++) {
             const projectElement = document.createElement('li');
             projectElement.innerText = profile.projectHistory[i];
@@ -35,6 +40,7 @@ function loadProfile() {
             projectElement.className = 'horiz-center';
             projectListElement.appendChild(projectElement);
         }
+        */
         for (var i = 0; i < profile.reviews.length; i++) {
             const reviewElement = document.createElement('li');
             reviewElement.innerText = profile.reviews[i];
@@ -43,61 +49,143 @@ function loadProfile() {
             reviewListElement.appendChild(reviewElement);
         }
     });
+
+    // call other loading 
     loggingIn();
+    loadProjects();
 }
 
+/* displays contact info if logged in. otherwise, asks to log in*/
 function loggingIn(){
     fetch('authentication').then(response => response.json()).then((authentication) =>{
         const contactInfoElement = document.getElementById("contact-info");
-        const logoutElement = document.getElementById("logout");
+        // const logoutElement = document.getElementById("logout");
+        const loggingElement = document.getElementById("logging");
+
         var isLoggedIn = (authentication.isLoggedIn == 'true'); 
         var loginUrl = authentication.login;
         var logoutUrl = authentication.logout;
         if(isLoggedIn){
+            loggingElement.innerText = "LOG OUT";
+            loggingElement.href = loginUrl;
             contactInfoElement.display = "inline";
-            logoutElement.innerHTML = "<p>Logout <a href=\"" + logoutUrl + "\">here</a>.</p>"
+            // logoutElement.innerHTML = "<p>Logout <a href=\"" + logoutUrl + "\">here</a>.</p>"
 
         } else {
+            loggingElement.innerText = "LOG IN";
+            loggingElement.href = loginUrl;
             contactInfoElement.innerHTML = "Login <a href=\"" + loginUrl + "\">here</a> to see the contact info.";
+            contactInfoElement.display = "inline";
         }
     });
 }
 
-/** Fetches tasks from the server and adds them to the DOM. */
-function loadTasks() {
-  fetch('/list-tasks').then(response => response.json()).then((tasks) => {
-    const taskListElement = document.getElementById('task-list');
-    tasks.forEach((task) => {
-      taskListElement.appendChild(createTaskElement(task));
+/* Author: Diego V.A. */
+function loadProjects(){
+    fetch("/search").then(response => response.json()).then((projects) => {
+
+        //Get the div where the project cards are gonna be displayed:
+        const projectDisplay = document.getElementById("projects-display-section");
+        let currentProjectRow = document.createElement('div'); //Create the first row container.
+        let currentProjectRowContent = document.createElement('div'); //Create the first content container
+        //We need to keep a counter to know when to close a row and start a new one:
+        let counter = 0;
+
+        //CSS style:
+        currentProjectRow.className = "projects-row";
+        currentProjectRowContent.className = "content-row";
+
+        //Iterates the JSON by keys:
+        for(let project of projects){
+
+            // for consistency sake:
+            if(project.author == "John Doe"){
+                counter++;
+
+                //Create a card element with the current project values:
+                const currentProjectCard = buildProjectCard(project.title, project.tags, project.author, project.image);
+
+                //Add it to the current row:
+                currentProjectRowContent.appendChild(currentProjectCard);
+
+                //Only 3 elements per row:
+                if(counter % 3 == 0){
+
+                    //Add the row to the DOM:
+                    currentProjectRow.appendChild(currentProjectRowContent);
+                    projectDisplay.appendChild(currentProjectRow);
+
+                    //Create a new row and make it the current row:
+                    currentProjectRow = document.createElement('div');
+                    currentProjectRowContent = document.createElement('div');
+
+                    //CSS style to the new row:
+                    currentProjectRow.className = "projects-row";
+                    currentProjectRowContent.className = "content-row";
+
+                }
+            }
+
+        }
+
+        //In case there is a number of projects that is not a multiple of 3, add the last row with the remaining cards:
+        if(counter % 3 != 0){
+
+            //Add the row to the DOM:
+            currentProjectRow.appendChild(currentProjectRowContent);
+            projectDisplay.appendChild(currentProjectRow);
+
+        }
+
     })
-  });
+
 }
 
-/** Creates an element that represents a task, including its delete button. */
-function createTaskElement(task) {
-  const taskElement = document.createElement('li');
-  taskElement.className = 'task';
+// Author: Diego V.A.
+//Builds a project card element from the given parameter values:
+function buildProjectCard(title, tags, author, image){
 
-  const titleElement = document.createElement('span');
-  titleElement.innerText = task.title;
+    const projectCard = document.createElement('div');
+    projectCard.className = "project-card";
 
-  const deleteButtonElement = document.createElement('button');
-  deleteButtonElement.innerText = 'Delete';
-  deleteButtonElement.addEventListener('click', () => {
-    deleteTask(task);
+    const cardImageDiv = document.createElement('div');
+    cardImageDiv.className = "project-image-div";
 
-    // Remove the task from the DOM.
-    taskElement.remove();
-  });
+    //If the project has a personalized image, set it:
+    if(image != "default"){
 
-  taskElement.appendChild(titleElement);
-  taskElement.appendChild(deleteButtonElement);
-  return taskElement;
-}
+        cardImageDiv.style.backgroundImage = "url('" + image + "')";
 
-/** Tells the server to delete the task. */
-function deleteTask(task) {
-  const params = new URLSearchParams();
-  params.append('id', task.id);
-  fetch('/delete-task', {method: 'POST', body: params});
-}
+    }
+
+    const projectDescriptionDiv = document.createElement('div');
+    projectDescriptionDiv.className = "project-decription";
+
+    const projectTitle = document.createElement('h4');
+    projectTitle.className = "project-title teko-text";
+    projectTitle.innerText = title;
+
+    const projectTags = document.createElement("p");
+    projectTags.className = "project-tags karla-text";
+
+    //Format the tags and append them to the tags section:
+    for(let tag of tags){
+
+        projectTags.textContent += "#" + tag + " ";
+
+    }
+
+    const projectAuthor = document.createElement("h5");
+    projectAuthor.className = "project-author karla-text";
+    projectAuthor.innerText = author;
+
+    projectDescriptionDiv.appendChild(projectTitle);
+    projectDescriptionDiv.appendChild(projectTags);
+    projectDescriptionDiv.appendChild(projectAuthor);
+
+    projectCard.appendChild(cardImageDiv);
+    projectCard.appendChild(projectDescriptionDiv);
+
+    return projectCard;
+
+} 
