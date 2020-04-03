@@ -22,6 +22,18 @@ public class SearchServlet extends HttpServlet {
     @Override
     public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
+        //Check if there is any parameters on the request:
+        if(request.getQueryString() != null){
+
+            //Get parameters for the search:
+            String searchBarText = request.getParameter("bar");
+            String language = request.getParameter("tag-zones");
+            String difficulty = request.getParameter("difficulties");
+            String timeCommitment = request.getParameter("time-commitment");
+            String collabType = request.getParameter("collab-type");
+
+        }
+
         //Dummy Data:
         ArrayList<SearchProject> projectData = new ArrayList<SearchProject>();
 
