@@ -3,9 +3,14 @@
   <head>
     <meta charset="UTF-8">
     <title>New Project</title>
+    <!-- Styling -->
     <link rel="stylesheet" href="search.css">
+    <link href="https://fonts.googleapis.com/css?family=Teko&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Karla&display=swap" rel="stylesheet">
+    <!-- js -->
+    <script src="script.js"></script>
   </head>
-  <body>
+  <body onload="loadOptions()">
     <h1>New Project</h1>
     <form method="POST" action="/post-project">
       <h2>Name of New Project</h2> 
@@ -16,7 +21,19 @@
       <br/>
       <h2>GitHub Repository Link</h2>
       <input type="text" name="giturl"  value="https://github.com/" />
-      <br/>
+      <br/> <!-- Language options -->
+      <h2>Primary Language</h2>
+      <input list = "languages" name = "tag-languages" >
+        <datalist id = "languages">
+          <div id="language-options"></div>
+        </datalist>
+      <br/> <!-- Time-Zone options -->
+      <h2>Prefered Time-Zone</h2>
+      <input list = "time-zones" name = "tag-timez" >
+        <datalist id = "time-zones">
+          <div id="timez-options"></div>
+        </datalist>
+      <br/> <!-- Create Proj button -->
       <input type="submit" value="Post project!">
     </form>
   </body>
