@@ -32,6 +32,7 @@ public class ProfileInfoServlet extends HttpServlet {
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
+    //   TODO: include datastore for profile's and retrieve profile data from datastore
     // initialize Profile with dummy data
     String name = "John Doe";
     ArrayList<String> projectHistory = new ArrayList<String>();

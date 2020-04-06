@@ -21,7 +21,6 @@ function loadProfile() {
         const nameElement = document.getElementById("name");
         const contactInfoElement = document.getElementById("contact-info");
         const reviewListElement = document.getElementById("review-list");
-        // const projectListElement = document.getElementById("project-list");
 
         // display profile
         nameElement.innerText = profile.name;
@@ -30,17 +29,6 @@ function loadProfile() {
         console.log(profile.contactInfo.Email + "<br/>" + profile.contactInfo.Mobile);
         contactInfoElement.display = "none";
 
-        
-        /*
-        Below is ommited for now
-        for (var i = 0; i < profile.projectHistory.length; i++) {
-            const projectElement = document.createElement('li');
-            projectElement.innerText = profile.projectHistory[i];
-            console.log(profile.projectHistory[i]);
-            projectElement.className = 'horiz-center';
-            projectListElement.appendChild(projectElement);
-        }
-        */
         for (var i = 0; i < profile.reviews.length; i++) {
             const reviewElement = document.createElement('li');
             reviewElement.innerText = profile.reviews[i];
@@ -57,7 +45,7 @@ function loadProfile() {
 
 /* displays contact info if logged in. otherwise, asks to log in*/
 function loggingIn(){
-    fetch('authentication').then(response => response.json()).then((authentication) =>{
+    fetch('/authentication').then(response => response.json()).then((authentication) =>{
         const contactInfoElement = document.getElementById("contact-info");
         // const logoutElement = document.getElementById("logout");
         const loggingElement = document.getElementById("logging");
@@ -69,7 +57,6 @@ function loggingIn(){
             loggingElement.innerText = "LOG OUT";
             loggingElement.href = loginUrl;
             contactInfoElement.display = "inline";
-            // logoutElement.innerHTML = "<p>Logout <a href=\"" + logoutUrl + "\">here</a>.</p>"
 
         } else {
             loggingElement.innerText = "LOG IN";

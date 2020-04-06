@@ -15,7 +15,7 @@
 package com.google.sps.data;
 import java.util.*;
 
-/** An item on a todo list. */
+/** Profile information. */
 public final class Profile {
 
   private final String name;

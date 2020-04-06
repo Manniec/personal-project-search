@@ -35,7 +35,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/** Servlet responsible for listing tasks. */
+/** Servlet responsible for authenticating user's log in status. */
 @WebServlet("/authentication")
 public class AuthenticationServlet extends HttpServlet {
 
