@@ -24,6 +24,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import com.google.gson.Gson;
 import java.sql.Timestamp;
+import me.xdrop.fuzzywuzzy.FuzzySearch;
 
 @WebServlet("/search")
 public class SearchServlet extends HttpServlet {
@@ -34,8 +35,9 @@ public class SearchServlet extends HttpServlet {
         //Get the datastore instance:
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
-        PreparedQuery results;
+        Iterable<Entity> results;
 
+        //An ArrayList of searched projects:
         ArrayList<SearchProject> projects = new ArrayList<SearchProject>();
 
         //Check if there is any parameters on the request:
@@ -50,11 +52,11 @@ public class SearchServlet extends HttpServlet {
             Query query = new Query("Project").addSort("timestamp", SortDirection.DESCENDING);
     
             //Query the datastore and get the results:
-            results = datastore.prepare(query);
+            results = datastore.prepare(query).asIterable();
 
         }
 
-        for(Entity entity : results.asIterable()){
+        for(Entity entity : results){
 
             //Get the properties of the entity:
             String title = (String) entity.getProperty("title");
@@ -95,18 +97,18 @@ public class SearchServlet extends HttpServlet {
 
         //Create test Project Entity with dummy values:
         Entity projectEntity = new Entity("Project");
-        projectEntity.setProperty("title", "Project Cars 3?");
+        projectEntity.setProperty("title", "The principles of quantum computation.");
         projectEntity.setProperty("description", "This is a test description");    
         projectEntity.setProperty("timestamp", System.currentTimeMillis());
         projectEntity.setProperty("giturl", "https://github.com/Manniec/personal-project-search");
         projectEntity.setProperty("author", "Manuel Doe"); //This can be the username or email.
 
         //TAGS:
-        projectEntity.setProperty("language", "Spanish"); //In a future this can be an array of languages.
-        projectEntity.setProperty("zone", "Australia/Brisbane"); //Time Zone
-        projectEntity.setProperty("difficulty", "medium"); //Difficulty
-        projectEntity.setProperty("commitment", "more 9"); //Time commitment
-        projectEntity.setProperty("collab", "online"); //Collaboration type
+        projectEntity.setProperty("language", "English"); //In a future this can be an array of languages.
+        projectEntity.setProperty("zone", "Asia/Baku"); //Time Zone
+        projectEntity.setProperty("difficulty", "hard"); //Difficulty
+        projectEntity.setProperty("commitment", "1-3"); //Time commitment
+        projectEntity.setProperty("collab", "offline"); //Collaboration type
         projectEntity.setProperty("image", "default"); //This is optional. Set to "default" to tell the JS to display the placeholder project image.
 
         //Put the Entity in the datastore:
@@ -119,7 +121,7 @@ public class SearchServlet extends HttpServlet {
 
     }
 
-    private PreparedQuery queryProjectDatastore(HttpServletRequest request, DatastoreService datastore){
+    private Iterable<Entity> queryProjectDatastore(HttpServletRequest request, DatastoreService datastore){
 
             //Get parameters for the search:
             String searchBarText = request.getParameter("bar");
@@ -135,61 +137,39 @@ public class SearchServlet extends HttpServlet {
             //Store the results of the query:
             PreparedQuery results;
 
-            //Debug prints:
-            System.out.println("searchBar = " + searchBarText);
-            System.out.println("language = " + language);
-            System.out.println("zone = " + zone);
-            System.out.println("difficulty = " + difficulty);
-            System.out.println("time = " + timeCommitment);
-            System.out.println("collabType = " + collabType);
-
             //Create and add query filters for each tag based on the request parameters:
-            if(!"".equals(searchBarText)){
-
-                //TODO: Implement free text search filter here.
-                System.out.println("The search bar is not empty");
-
-            }
-
             if(!"".equals(language)){
 
                 //Property name, comparison operator, search value:
-                System.out.println("Language is not empty");
                 filters.add(new FilterPredicate("language", FilterOperator.EQUAL, language));
 
             }
 
             if(!"".equals(zone)){
 
-                System.out.println("Zone is not empty");
                 filters.add(new FilterPredicate("zone", FilterOperator.EQUAL, zone));
 
             }
 
             if(difficulty != null){
 
-                System.out.println("Difficulty is not empty");
                 filters.add(new FilterPredicate("difficulty", FilterOperator.EQUAL, difficulty));
 
             }
 
             if(timeCommitment != null){
 
-                System.out.println("Commitment is not empty");
                 filters.add(new FilterPredicate("commitment", FilterOperator.EQUAL, timeCommitment));
 
             }
 
             if(collabType != null){
 
-                System.out.println("Collab is not empty");
                 filters.add(new FilterPredicate("collab", FilterOperator.EQUAL, collabType));
 
             }
 
-            //Check for single filter queries and empty queries:
-            System.out.println(filters.size());
-
+            //Check for single filter queries (individual filter) and empty queries (no filters):
             if(filters.size() == 0) {
 
                 //In case of an empty query: Return nothing or everything:
@@ -223,8 +203,46 @@ public class SearchServlet extends HttpServlet {
 
             }
 
+            Iterable<Entity> finalResults;
+
+            //Needs to return an iterable:
+            finalResults = results.asIterable();
+
+            if(!"".equals(searchBarText)){
+
+                //If there is text in the searchBar, perform a fuzzySearch in the queried projects:
+                finalResults = fuzzySearch(searchBarText, finalResults);
+
+            }
+
             //Return the results:
-            return results;
+            return finalResults;
+
+    }
+
+    //Filters the already filtered entities from the datastore query by it's title similarity to the searchBarText:
+    private Iterable<Entity> fuzzySearch(String searchText, Iterable<Entity> entities){
+
+        //0 is completely equal. 100 is equal:
+        int threshold = 30;
+
+        //ArrayList of projects that matched the free text search:
+        ArrayList<Entity> matches = new ArrayList<Entity>();
+
+        //Do a FuzzySearch between the searchBarText and every entity's title:
+        for(Entity entity : entities){
+
+            String currentTitle = (String) entity.getProperty("title");
+
+            if(FuzzySearch.ratio(searchText, currentTitle) > threshold){
+
+                matches.add(entity);
+
+            }
+
+        }
+
+        return matches;
 
     }
 
