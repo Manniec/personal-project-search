@@ -69,7 +69,7 @@ function loggingIn(){
 
 /* Author: Diego V.A. */
 function loadProjects(){
-    fetch("/search").then(response => response.json()).then((projects) => {
+    fetch("/profile-projects").then(response => response.json()).then((projects) => {
 
         //Get the div where the project cards are gonna be displayed:
         const projectDisplay = document.getElementById("projects-display-section");
@@ -85,32 +85,29 @@ function loadProjects(){
         //Iterates the JSON by keys:
         for(let project of projects){
 
-            // for consistency sake:
-            if(project.author == "John Doe"){
-                counter++;
+            counter++;
 
-                //Create a card element with the current project values:
-                const currentProjectCard = buildProjectCard(project.title, project.tags, project.author, project.image);
+            //Create a card element with the current project values:
+            const currentProjectCard = buildProjectCard(project.title, project.tags, project.author, project.image);
 
-                //Add it to the current row:
-                currentProjectRowContent.appendChild(currentProjectCard);
+            //Add it to the current row:
+            currentProjectRowContent.appendChild(currentProjectCard);
 
-                //Only 3 elements per row:
-                if(counter % 3 == 0){
+            //Only 3 elements per row:
+            if(counter % 3 == 0){
 
-                    //Add the row to the DOM:
-                    currentProjectRow.appendChild(currentProjectRowContent);
-                    projectDisplay.appendChild(currentProjectRow);
+                //Add the row to the DOM:
+                currentProjectRow.appendChild(currentProjectRowContent);
+                projectDisplay.appendChild(currentProjectRow);
 
-                    //Create a new row and make it the current row:
-                    currentProjectRow = document.createElement('div');
-                    currentProjectRowContent = document.createElement('div');
+                //Create a new row and make it the current row:
+                currentProjectRow = document.createElement('div');
+                currentProjectRowContent = document.createElement('div');
 
-                    //CSS style to the new row:
-                    currentProjectRow.className = "projects-row";
-                    currentProjectRowContent.className = "content-row";
+                //CSS style to the new row:
+                currentProjectRow.className = "projects-row";
+                currentProjectRowContent.className = "content-row";
 
-                }
             }
 
         }
@@ -175,4 +172,4 @@ function buildProjectCard(title, tags, author, image){
 
     return projectCard;
 
-} 
+}
