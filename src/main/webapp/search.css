@@ -13,12 +13,23 @@ body {
 
 }
 
+h1 {
+  color: black;
+  font-family: 'Teko', sans-serif;
+  font-size: 20px;
+}
+
+p {
+  font-size: 20px;
+  font-family: 'Karla', sans-serif;
+}
+
 .spacing {
 
     height: 100px;
 
 }
-
+/*******************FONTS********************/
 .teko-text {
 
     font-family: 'Teko', sans-serif;
