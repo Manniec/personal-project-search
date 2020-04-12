@@ -22,6 +22,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+//for saving user posting
+import com.google.appengine.api.users.UserService;
+import com.google.appengine.api.users.UserServiceFactory;
 
 /** Servlet responsible for creating new projects. */
 @WebServlet("/post-project")
@@ -29,16 +32,31 @@ public class NewProjectServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    String title = request.getParameter("title");
-    String description = request.getParameter("description");
-    long timestamp = System.currentTimeMillis();
-    String giturl = request.getParameter("giturl");
-
+    long timestamp = System.currentTimeMillis();                    //store post time
+    //UserService userService = UserServiceFactory.getUserService();  //store creator
+    //String email = userService.getCurrentUser().getEmail();
+    //general project info
+    String title = request.getParameter("title");                   //store name of project
+    String description = request.getParameter("description");       //store description text
+    String giturl = request.getParameter("giturl");                 //store git url 
+    //tags
+    String language = request.getParameter("tag-languages");        //store language
+    String timezone = request.getParameter("tag-timez");             //store time-zone
+    String ratediff = request.getParameter("difficulties");         //store difficulties
+    String timecommit = request.getParameter("time-commitment");    //store time commitment
+    String collabtyp = request.getParameter("collab-type");         //store collaboration method
+    
     Entity projectEntity = new Entity("Project");
+    //projectEntity.setProperty("owner_email", email);
+    projectEntity.setProperty("timestamp", timestamp);
     projectEntity.setProperty("title", title);
     projectEntity.setProperty("description", description);
-    projectEntity.setProperty("timestamp", timestamp);
     projectEntity.setProperty("giturl", giturl);
+    projectEntity.setProperty("language", language);
+    projectEntity.setProperty("timezone", timezone);
+    projectEntity.setProperty("ratediff", ratediff);
+    projectEntity.setProperty("timecommit", timecommit);
+    projectEntity.setProperty("collabtyp", collabtyp);
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(projectEntity);
