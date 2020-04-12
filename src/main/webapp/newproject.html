@@ -10,15 +10,15 @@
     <!-- js -->
     <script src="script.js"></script>
   </head>
-  <body onload="loadOptions()">
+  <body onload="onLoad()">
     <h1>New Project</h1>
     <form method="POST" action="/post-project">
-      <h2>Name of New Project</h2> 
+      <h2>Name of New Project</h2> <!-- Title Proj -->
       <input type="text" name="title" />
-      <br/>
+      <br/><!-- Description of Proj -->
       <h2>Project Description</h2>
       <textarea name="description" rows="10" cols="30">Describe your project here!</textarea>
-      <br/>
+      <br/><!-- Git Repo -->
       <h2>GitHub Repository Link</h2>
       <input type="text" name="giturl"  value="https://github.com/" />
       <br/> <!-- Language options -->
@@ -33,6 +33,17 @@
         <datalist id = "time-zones">
           <div id="timez-options"></div>
         </datalist>
+      <br/> <!-- Difficulty options -->
+      <select name = "difficulties">
+          <div id="difficullty-options"></div>
+        <!--
+        <option value = "default" selected disabled hidden>select</option>
+        <option value = "easy">Easy</option>
+        <option value = "medium">Medium</option>
+        <option value = "hard">Hard</option>
+        <option value = "impossible">Impossible</option> 
+        -->
+      </select>    
       <br/> <!-- Create Proj button -->
       <input type="submit" value="Post project!">
     </form>
