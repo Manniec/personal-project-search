@@ -13,39 +13,64 @@
   <body onload="onLoad()">
     <h1>New Project</h1>
     <form method="POST" action="/post-project">
-      <h2>Name of New Project</h2> <!-- Title Proj -->
-      <input type="text" name="title" />
-      <br/><!-- Description of Proj -->
-      <h2>Project Description</h2>
-      <textarea name="description" rows="10" cols="30">Describe your project here!</textarea>
-      <br/><!-- Git Repo -->
-      <h2>GitHub Repository Link</h2>
-      <input type="text" name="giturl"  value="https://github.com/" />
-      <br/> <!-- Language options -->
-      <h2>Primary Language</h2>
-      <input list = "languages" name = "tag-languages" >
-        <datalist id = "languages">
-          <div id="language-options"></div>
-        </datalist>
-      <br/> <!-- Time-Zone options -->
-      <h2>Prefered Time-Zone</h2>
-      <input list = "time-zones" name = "tag-timez" >
-        <datalist id = "time-zones">
-          <div id="timez-options"></div>
-        </datalist>
-      <br/> <!-- Difficulty options -->
-      <select name = "difficulties">
-          <div id="difficullty-options"></div>
-        <!--
-        <option value = "default" selected disabled hidden>select</option>
-        <option value = "easy">Easy</option>
-        <option value = "medium">Medium</option>
-        <option value = "hard">Hard</option>
-        <option value = "impossible">Impossible</option> 
-        -->
-      </select>    
-      <br/> <!-- Create Proj button -->
-      <input type="submit" value="Post project!">
+      <fieldset> 
+        <legend>Project Details:</legend> <!-- Group inputs by type -->
+          <br>
+          <label for="tag-languages">Project Title:</label>
+          <input type="text" name="title" />
+          <br><br/><!-- Description of Proj -->
+          <label for="tag-languages">Project description:</label> <br>
+          <textarea name="description" rows="10" cols="30">Describe your project here!</textarea>
+          <br><br/><!-- Git Repo -->
+          <label for="tag-languages">Git Repository Link:</label>
+          <input type="text" name="giturl"  value="https://github.com/" />
+          <br>
+      </fieldset>
+      <fieldset>
+        <legend>Project Tags:</legend> <!-- Group inputs by type -->
+          <br>
+          <label for="tag-languages">Primary Communication Language:</label>
+          <input list = "languages" name = "tag-languages" >
+            <datalist id = "languages">
+              <div id="language-options"></div>
+            </datalist>
+          <br><br/> <!-- Time-Zone options -->
+          <label for="tag-timez">Prefered Time-Zone:</label>
+          <input list = "time-zones" name = "tag-timez" >
+            <datalist id = "time-zones">
+              <div id="timez-options"></div>
+            </datalist>
+          <br><br/> <!-- Difficulty options -->
+          <label for="difficulties">Difficulty Rating:</label>
+          <select name = "difficulties">
+            <option value = "default" selected disabled hidden>select</option>
+            <option value = "easy">Easy</option>
+            <option value = "medium">Medium</option>
+            <option value = "hard">Hard</option>
+            <option value = "impossible">Impossible</option> 
+          </select>  
+          <br><br/> <!-- Time commitment options -->  
+          <label for="time-commitment">Time Commitment:</label>
+          <select name = "time-commitment">
+            <option value = "default" selected disabled hidden>select</option>
+            <option value = "less 1">Less than 1 hour</option>
+            <option value = "1-3">1 to 3 hours</option>
+            <option value = "3-6">3 to 6 hours</option>
+            <option value = "6-9">6 to 9 hours</option>
+            <option value = "more 9">More than 9 hours</option>
+          </select>
+          <br><br/> <!-- Collab types-->
+          <label for="collab-type">Collaboration Method:</label>
+          <select name = "collab-type">
+            <option value = "default" selected disabled hidden>select</option>
+            <option value = "presential">Presential</option>
+            <option value = "online">Online</option>
+            <option value = "3-6">Offline</option>
+          </select>
+          <br>
+      </fieldset>
+        <br><br/> <!-- Create Proj button -->
+        <input type="submit" value="Post project!">
     </form>
   </body>
 </html>

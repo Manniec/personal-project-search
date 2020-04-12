@@ -27,13 +27,6 @@ function onLoad(){
 }
 
 function loadOptions(){
-  document.getElementById('difficulty-options').innerHTML = `
-    <option value = "default" selected disabled hidden>select</option>
-    <option value = "easy">Easy</option>
-    <option value = "medium">Medium</option>
-    <option value = "hard">Hard</option>
-    <option value = "impossible">Impossible</option> 
-    `
     
   document.getElementById('language-options').innerHTML = `
     <option value = "English"> 
