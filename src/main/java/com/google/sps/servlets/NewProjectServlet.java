@@ -22,9 +22,10 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-//for saving user posting
+//For saving the user who creates a project
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
+
 
 /** Servlet responsible for creating new projects. */
 @WebServlet("/post-project")
@@ -32,6 +33,7 @@ public class NewProjectServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    
     long timestamp = System.currentTimeMillis();                    //store post time
     //UserService userService = UserServiceFactory.getUserService();  //store creator
     //String email = userService.getCurrentUser().getEmail();
