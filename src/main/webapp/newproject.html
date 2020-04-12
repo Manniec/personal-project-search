@@ -13,6 +13,7 @@
   <body onload="onLoad()">
     <h1>New Project</h1>
     <form method="POST" action="/post-project">
+      
       <fieldset> 
         <legend>Project Details:</legend> <!-- Group inputs by type -->
           <br>
@@ -26,6 +27,7 @@
           <input type="text" name="giturl"  value="https://github.com/" />
           <br>
       </fieldset>
+      
       <fieldset>
         <legend>Project Tags:</legend> <!-- Group inputs by type -->
           <br>
@@ -69,8 +71,10 @@
           </select>
           <br>
       </fieldset>
-        <br><br/> <!-- Create Proj button -->
+      
+        <br><br/> <!-- Submit button -->
         <input type="submit" value="Post project!">
+
     </form>
   </body>
 </html>
