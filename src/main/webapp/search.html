@@ -234,6 +234,55 @@
 
       </div>
 
+      <div class = "modal-background" id = "modal">
+
+      <div class = "project-popup" id = "current_popup">
+
+          <span class = "close" onclick = "closePopUp()">&times;</span>
+
+          <div class = "popup-image"></div>
+
+          <div class = "popup-header">
+
+              <h3 class = "popup-title teko-text" id = "popup-title">No Title</h3>
+              <h6 class = "popup-author karla-text" id = "popup-author"></h6>
+
+          </div>
+
+          <div class = "popup-description-div">
+
+            <p class = "popup-description karla-text" id = "popup-description">No description</p>
+
+          </div>
+
+          <div class = "popup-tags-div">
+
+              <p class = "popup-tags karla-text" id = "popup-tags">#NoTags</p>
+
+          </div>
+
+          <div class = "popup-links">
+
+              <button class = "popup-github" id = "popup-github"></button>
+
+          </div>
+
+          <div class = "popup-contact-div">
+
+              <form action = "/profile.html" method = "GET" id = "popup-contact">
+
+                <input type = "text" name = "user_id" class = "id-hidden" id = "user_id">
+              
+                <input type = "submit" value = "Contact!">
+
+              </form>
+
+          </div>
+
+      </div>
+
+      </div>
+
       <!--This is a test form for uploading dummy projects for testing:-->
 
       <form action = "/search" method = "POST">

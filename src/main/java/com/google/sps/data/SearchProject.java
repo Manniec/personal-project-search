@@ -6,6 +6,10 @@ public class SearchProject {
     private String[] tags;
     private String author;
     private String image = "default";
+    private long timestamp;
+    private String description;
+    private String gitURL;
+
 
     //Default class constructor:
 
@@ -13,11 +17,14 @@ public class SearchProject {
     private SearchProject(){}
 
     //Class constructor with parameters:
-    public SearchProject(String title, String[] tags, String author, String image){
+    public SearchProject(String title, String[] tags, String author, String image, long timestamp, String description, String gitURL){
 
         this.title = title;
         this.tags = tags;
         this.author = author;
+        this.timestamp = timestamp;
+        this.description = description;
+        this.gitURL = gitURL;
 
         if(image != null){
 

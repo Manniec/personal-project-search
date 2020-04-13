@@ -68,12 +68,15 @@ public class SearchServlet extends HttpServlet {
             String zone = (String) entity.getProperty("timezone");
             //String image = (String) entity.getProperty("image");
             String image = null;
+            long timestamp = (long) entity.getProperty("timestamp");
+            String description = (String) entity.getProperty("description");
+            String git = (String) entity.getProperty("giturl");
 
             //Create an array of tags to be displayed:
             String[] projectTagsList = {language, zone, difficulty, commitment, collab};
 
             //Create a SearchProject object with the entity properties:
-            SearchProject currentProject = new SearchProject(title, projectTagsList, email, image); //Image is set to null for the moment as it displays the default project image.
+            SearchProject currentProject = new SearchProject(title, projectTagsList, email, image, timestamp, description, git); //Image is set to null for the moment as it displays the default project image.
 
             //Add the current project to the ArrayList of projects:
             projects.add(currentProject);
@@ -98,19 +101,19 @@ public class SearchServlet extends HttpServlet {
 
         //Create test Project Entity with dummy values:
         Entity projectEntity = new Entity("Project");
-        projectEntity.setProperty("title", "The principles of quantum computation.");
-        projectEntity.setProperty("description", "This is a test description");    
+        projectEntity.setProperty("title", "Project Cars 3");
+        projectEntity.setProperty("description", "This is a test description but different");    
         projectEntity.setProperty("timestamp", System.currentTimeMillis());
         projectEntity.setProperty("giturl", "https://github.com/Manniec/personal-project-search");
         //projectEntity.setProperty("author", "Manuel Doe"); //This can be the username or email.
-        projectEntity.setProperty("owner_email", "john_doe@gmail.com");
+        projectEntity.setProperty("owner_email", "juan_doe@gmail.com");
 
         //TAGS:
-        projectEntity.setProperty("language", "English"); //In a future this can be an array of languages.
-        projectEntity.setProperty("timezone", "Asia/Baku"); //Time Zone
+        projectEntity.setProperty("language", "Spanish"); //In a future this can be an array of languages.
+        projectEntity.setProperty("timezone", "America/Santiago"); //Time Zone
         projectEntity.setProperty("ratediff", "hard"); //Difficulty
         projectEntity.setProperty("timecommit", "1-3"); //Time commitment
-        projectEntity.setProperty("collabtyp", "offline"); //Collaboration type
+        projectEntity.setProperty("collabtyp", "online"); //Collaboration type
         //projectEntity.setProperty("image", "default"); //This is optional. Set to "default" to tell the JS to display the placeholder project image.
 
         //Put the Entity in the datastore:
