@@ -17,9 +17,9 @@
 
           <div class = "header-controlls-div">
 
-              <a class = "header-controll teko-text" href = "#">LANDING</a>
+              <a class = "header-controll teko-text" href = "/index.html">LANDING</a>
               <a class = "header-controll teko-text" href = "#">PROFILE</a>
-              <a class = "header-controll teko-text" href = "#">CREATE</a>
+              <a class = "header-controll teko-text" href = "/newproject.html">CREATE</a>
 
           </div>
 
@@ -240,42 +240,58 @@
 
           <span class = "close" onclick = "closePopUp()">&times;</span>
 
-          <div class = "popup-image"></div>
+          <div class = "popup-image-div">
 
-          <div class = "popup-header">
+              <div class = "popup-image">
 
-              <h3 class = "popup-title teko-text" id = "popup-title">No Title</h3>
-              <h6 class = "popup-author karla-text" id = "popup-author"></h6>
+                  <img src = "/searchImages/blueprintDefault.png" class = "inner-image">
 
-          </div>
-
-          <div class = "popup-description-div">
-
-            <p class = "popup-description karla-text" id = "popup-description">No description</p>
+              </div>
 
           </div>
 
-          <div class = "popup-tags-div">
+          <div class = "project-info">
 
-              <p class = "popup-tags karla-text" id = "popup-tags">#NoTags</p>
+            <div class = "popup-header">
 
-          </div>
+                <h3 class = "popup-title teko-text" id = "popup-title">No Title</h3>
+                <h6 class = "popup-author karla-text" id = "popup-author"></h6>
 
-          <div class = "popup-links">
+            </div>
 
-              <button class = "popup-github" id = "popup-github"></button>
+            <div class = "popup-description-div">
 
-          </div>
+                <p class = "popup-description karla-text" id = "popup-description">No description</p>
 
-          <div class = "popup-contact-div">
+            </div>
 
-              <form action = "/profile.html" method = "GET" id = "popup-contact">
+            <div class = "popup-tags-div">
 
-                <input type = "text" name = "user_id" class = "id-hidden" id = "user_id">
-              
-                <input type = "submit" value = "Contact!">
+                <p class = "popup-tags karla-text" id = "popup-tags">#NoTags</p>
 
-              </form>
+            </div>
+
+            <div class = "popup-links">
+
+                <button class = "popup-github" id = "popup-github">
+
+                    <img src = "/searchImages/githubLogo.png" id = "github-image">
+
+                </button>
+
+            </div>
+
+            <div class = "popup-contact-div">
+
+                <form action = "/profile.html" method = "GET" id = "popup-contact" class = "popup-contact-div">
+
+                    <input type = "text" name = "user_id" class = "id-hidden" id = "user_id">
+                
+                    <input type = "submit" value = "Contact!" class = "contact-button teko-text">
+
+                </form>
+
+            </div>
 
           </div>
 

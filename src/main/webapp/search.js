@@ -163,6 +163,13 @@ function getSingleProject(projectId){
     document.getElementById("popup-github").onclick = function() {location.href = selectedProject.gitURL;};
     document.getElementById("user_id").value = selectedProject.author;
 
+    //If the project has a personalized image, set it:
+    if(selectedProject.image != "default"){
+
+        document.getElementById("inner-image").src = "'" + selectedProject.image + "'";
+
+    }
+
     document.getElementById("modal").style.display = "block";
     
     // When the user clicks anywhere outside of the modal, close it
