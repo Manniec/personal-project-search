@@ -98,6 +98,7 @@ function buildProjectCard(title, tags, author, image, projectId){
 
     const projectCard = document.createElement('div');
     projectCard.className = "project-card";
+    //Set the function for when the project is clicked with the projectId being the index of that project on the cached results:
     projectCard.onclick = function() {getSingleProject(projectId);};
 
     const cardImageDiv = document.createElement('div');
@@ -144,6 +145,7 @@ function buildProjectCard(title, tags, author, image, projectId){
 
 function getSingleProject(projectId){
 
+    //Get the selected project from the latest cached search results:
     const selectedProject = currentProjects[(projectId - 1)];
 
     document.getElementById("popup-title").innerText = selectedProject.title;
@@ -154,12 +156,14 @@ function getSingleProject(projectId){
 
     const tags = selectedProject.tags;
 
+    //Append tags and show them:
     for(let tag of tags){
 
         document.getElementById("popup-tags").innerText += "#" + tag + " ";
 
     }
 
+    //Set links and redirects:
     document.getElementById("popup-github").onclick = function() {location.href = selectedProject.gitURL;};
     document.getElementById("user_id").value = selectedProject.author;
 
@@ -170,6 +174,7 @@ function getSingleProject(projectId){
 
     }
 
+    //Show the modal:
     document.getElementById("modal").style.display = "block";
     
     // When the user clicks anywhere outside of the modal, close it
@@ -184,6 +189,7 @@ function getSingleProject(projectId){
 
 }
 
+//Hides the Modal:
 function closePopUp(){
 
     document.getElementById("modal").style.display = "none";
