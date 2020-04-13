@@ -195,3 +195,17 @@ function closePopUp(){
     document.getElementById("modal").style.display = "none";
 
 }
+
+//redirects to create project only if logged in
+async function ifLoggedIn(){
+    console.log('call auth servlet')
+    const login = await fetch('/authentication').then(login => login.json());
+    if(login.isLoggedIn){ //check if logged in
+        console.log('logged-in');
+        location.replace("newproject.html") //redirect to newproject.html
+    }else{
+        console.log('not logged-in');
+        location.replace(login.login)       //redirect to login page
+    }
+}
+
