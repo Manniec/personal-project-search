@@ -23,7 +23,7 @@ function onLoad(){
         console.log( 'document was not ready, place code here' );
         loadOptions();
     });
-}
+  }
 }
 
 function loadOptions(){
