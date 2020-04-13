@@ -15,6 +15,7 @@
 /** Fetches tasks from the server and adds them to the DOM. */
 
 function onLoad(){
+  ifLoggedIn(); //check if user is logged in and redirect to login page if not
   if( document.readyState !== 'loading' ) {
     console.log( 'document is already ready, just execute code here' );
     loadOptions();
@@ -24,6 +25,18 @@ function onLoad(){
         loadOptions();
     });
   }
+}
+
+//redirects to login page if not logged in
+async function ifLoggedIn(){
+    console.log('call auth servlet')
+    const login = await fetch('/authentication').then(login => login.json());
+    if(!login.isLoggedIn){ //check if logged in
+        location.replace(login.login)       //redirect to login page
+    }else{
+        document.getElementById('user-email').innerHTML = `
+            <p>Creator: <a href= "mailto: displayemailhere@gmail.com"> displayemailhere@gmail.com</a></p>`
+    }
 }
 
 function loadOptions(){

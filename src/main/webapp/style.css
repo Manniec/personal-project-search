@@ -16,9 +16,16 @@ h1 {
   font-size: 40px;
 }
 
+* {
+  font-family: 'Karla', sans-serif;
+}
+
 p {
   font-size: 20px;
-  font-family: 'Karla', sans-serif;
+}
+
+legend {
+  font-size: 20px;
 }
 
 .spacing {
