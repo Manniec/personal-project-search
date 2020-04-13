@@ -34,31 +34,25 @@ public class NewProjectServlet extends HttpServlet {
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     
-    long timestamp = System.currentTimeMillis();                    //store post time
-    UserService userService = UserServiceFactory.getUserService();  //store creator
+
+    UserService userService = UserServiceFactory.getUserService();  //get creator email
     String email = userService.getCurrentUser().getEmail();
-    //general project info
-    String title = request.getParameter("title");                   //store name of project
-    String description = request.getParameter("description");       //store description text
-    String giturl = request.getParameter("giturl");                 //store git url 
-    //tags
-    String language = request.getParameter("tag-languages");        //store language
-    String timezone = request.getParameter("tag-timez");             //store time-zone
-    String ratediff = request.getParameter("difficulties");         //store difficulties
-    String timecommit = request.getParameter("time-commitment");    //store time commitment
-    String collabtyp = request.getParameter("collab-type");         //store collaboration method
     
     Entity projectEntity = new Entity("Project");
-    projectEntity.setProperty("owner_email", email);
-    projectEntity.setProperty("timestamp", timestamp);
-    projectEntity.setProperty("title", title);
-    projectEntity.setProperty("description", description);
-    projectEntity.setProperty("giturl", giturl);
-    projectEntity.setProperty("language", language);
-    projectEntity.setProperty("timezone", timezone);
-    projectEntity.setProperty("ratediff", ratediff);
-    projectEntity.setProperty("timecommit", timecommit);
-    projectEntity.setProperty("collabtyp", collabtyp);
+    //store creator info
+    projectEntity.setProperty("owner_email", email);                //Store creator email           
+    //store post info     
+    projectEntity.setProperty("timestamp", System.currentTimeMillis());             //store post time
+    //store project info
+    projectEntity.setProperty("title", request.getParameter("title"));              //store name of project
+    projectEntity.setProperty("description", request.getParameter("description"));  //store description text
+    projectEntity.setProperty("giturl", request.getParameter("giturl"));            //store git url
+    //store tags
+    projectEntity.setProperty("language", request.getParameter("tag-languages"));       //store language
+    projectEntity.setProperty("timezone", request.getParameter("tag-timez"));           //store time-zone
+    projectEntity.setProperty("ratediff", request.getParameter("difficulties"));        //store difficulties
+    projectEntity.setProperty("timecommit", request.getParameter("time-commitment"));   //store time commitment
+    projectEntity.setProperty("collabtype", request.getParameter("collab-type"));       //store collaboration method
 
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(projectEntity);
