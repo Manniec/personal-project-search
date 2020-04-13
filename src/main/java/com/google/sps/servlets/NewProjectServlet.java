@@ -35,8 +35,8 @@ public class NewProjectServlet extends HttpServlet {
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
     
     long timestamp = System.currentTimeMillis();                    //store post time
-    //UserService userService = UserServiceFactory.getUserService();  //store creator
-    //String email = userService.getCurrentUser().getEmail();
+    UserService userService = UserServiceFactory.getUserService();  //store creator
+    String email = userService.getCurrentUser().getEmail();
     //general project info
     String title = request.getParameter("title");                   //store name of project
     String description = request.getParameter("description");       //store description text
@@ -49,7 +49,7 @@ public class NewProjectServlet extends HttpServlet {
     String collabtyp = request.getParameter("collab-type");         //store collaboration method
     
     Entity projectEntity = new Entity("Project");
-    //projectEntity.setProperty("owner_email", email);
+    projectEntity.setProperty("owner_email", email);
     projectEntity.setProperty("timestamp", timestamp);
     projectEntity.setProperty("title", title);
     projectEntity.setProperty("description", description);
