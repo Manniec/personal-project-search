@@ -63,6 +63,6 @@ public class NewProjectServlet extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(projectEntity);
 
-    response.sendRedirect("/index.html");
+    response.sendRedirect("/search.html");
   }
 }
