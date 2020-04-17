@@ -61,7 +61,7 @@ public class SearchServlet extends HttpServlet {
             //Get the properties of the entity:
             String title = (String) entity.getProperty("title");
             String email = (String) entity.getProperty("owner_email");
-            String collab = (String) entity.getProperty("collabtyp");
+            String collab = (String) entity.getProperty("collabtype");
             String commitment = (String) entity.getProperty("timecommit");
             String difficulty = (String) entity.getProperty("ratediff");
             String language = (String) entity.getProperty("language");
@@ -101,19 +101,19 @@ public class SearchServlet extends HttpServlet {
 
         //Create test Project Entity with dummy values:
         Entity projectEntity = new Entity("Project");
-        projectEntity.setProperty("title", "Project Cars 3");
-        projectEntity.setProperty("description", "This is a test description but different");    
+        projectEntity.setProperty("title", "Quantic computation in a potato");
+        projectEntity.setProperty("description", "This is a test description but its about potatos.");    
         projectEntity.setProperty("timestamp", System.currentTimeMillis());
         projectEntity.setProperty("giturl", "https://github.com/Manniec/personal-project-search");
         //projectEntity.setProperty("author", "Manuel Doe"); //This can be the username or email.
-        projectEntity.setProperty("owner_email", "juan_doe@gmail.com");
+        projectEntity.setProperty("owner_email", "james_may@gmail.com");
 
         //TAGS:
-        projectEntity.setProperty("language", "Spanish"); //In a future this can be an array of languages.
-        projectEntity.setProperty("timezone", "America/Santiago"); //Time Zone
+        projectEntity.setProperty("language", "English"); //In a future this can be an array of languages.
+        projectEntity.setProperty("timezone", "Europe/Amsterdam"); //Time Zone
         projectEntity.setProperty("ratediff", "hard"); //Difficulty
         projectEntity.setProperty("timecommit", "1-3"); //Time commitment
-        projectEntity.setProperty("collabtyp", "online"); //Collaboration type
+        projectEntity.setProperty("collabtype", "online"); //Collaboration type
         //projectEntity.setProperty("image", "default"); //This is optional. Set to "default" to tell the JS to display the placeholder project image.
 
         //Put the Entity in the datastore:
@@ -170,7 +170,7 @@ public class SearchServlet extends HttpServlet {
 
             if(collabType != null){
 
-                filters.add(new FilterPredicate("collabtyp", FilterOperator.EQUAL, collabType));
+                filters.add(new FilterPredicate("collabtype", FilterOperator.EQUAL, collabType));
 
             }
 
