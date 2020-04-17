@@ -207,4 +207,5 @@ async function ifLoggedIn(){
         console.log('not logged-in');
         location.replace(login.login)       //redirect to login page
     }
+
 }
