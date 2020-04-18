@@ -32,25 +32,29 @@ public class ProfileProjectsServlet extends HttpServlet {
 
         List <SearchProject> projects = new ArrayList<>();
         for (Entity entity : results) {
-            String author = (String) entity.getProperty("author");
+            String author = (String) entity.getProperty("owner_email");
 
             // only add project if author matches the email
             if(email.equals(author)){
 
                 //Get the properties of the entity:
                 String title = (String) entity.getProperty("title");
-                String collab = (String) entity.getProperty("collab");
-                String commitment = (String) entity.getProperty("commitment");
-                String difficulty = (String) entity.getProperty("difficulty");
+                String collab = (String) entity.getProperty("collabtype");
+                String commitment = (String) entity.getProperty("timecommit");
+                String difficulty = (String) entity.getProperty("ratediff");
                 String language = (String) entity.getProperty("language");
-                String zone = (String) entity.getProperty("zone");
-                String image = (String) entity.getProperty("image");
+                String zone = (String) entity.getProperty("timezone");
+                //String image = (String) entity.getProperty("image");
+                String image = null;
+                long timestamp = (long) entity.getProperty("timestamp");
+                String description = (String) entity.getProperty("description");
+                String git = (String) entity.getProperty("giturl");
 
                 //Create an array of tags to be displayed:
                 String[] projectTagsList = {language, zone, difficulty, commitment, collab};
 
                 //Create a SearchProject object with the entity properties:
-                SearchProject currentProject = new SearchProject(title, projectTagsList, author, null); //Image is set to null for the moment as it displays the default project image.
+                SearchProject currentProject = new SearchProject(title, projectTagsList, email, image, timestamp, description, git); //Image is set to null for the moment as it displays the default project image.
 
                 //Add the current project to the ArrayList of projects:
                 projects.add(currentProject);
