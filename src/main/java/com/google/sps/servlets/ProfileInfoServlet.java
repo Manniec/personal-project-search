@@ -34,9 +34,7 @@ public class ProfileInfoServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
     //   TODO: include datastore for profile's and retrieve profile data from datastore
-    // initialize Profile
     
-
     // parse email for name
     String email = request.getParameter("user_id");
     int endIndex;
