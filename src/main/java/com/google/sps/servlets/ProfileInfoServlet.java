@@ -25,6 +25,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+// Author: David V.P.
 /** Servlet responsible for listing tasks. */
 @WebServlet("/profile")
 public class ProfileInfoServlet extends HttpServlet {
@@ -33,18 +34,31 @@ public class ProfileInfoServlet extends HttpServlet {
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
     //   TODO: include datastore for profile's and retrieve profile data from datastore
-    // initialize Profile with dummy data
-    String name = "John Doe";
-    ArrayList<String> projectHistory = new ArrayList<String>();
-    projectHistory.add("Project 1");
-    projectHistory.add("Project 2");
-    ArrayList<String> reviews = new ArrayList<String>();
-    reviews.add("Very reliable!");
-    reviews.add("Great communicator and 100% reliable!");
-    HashMap<String, String> contactInfo = new HashMap<String, String>();
-    contactInfo.put("Mobile", "(123) 456-7809");
-    contactInfo.put("Email", "johndoe@gmail.com");
-    Profile profile1 = new Profile(name, projectHistory, reviews, contactInfo);
+    // initialize Profile
+    
+
+    // parse email for name
+    String email = request.getParameter("user_id");
+    int endIndex;
+    String name;
+    if(email != null && email.contains("@")){
+        endIndex = email.indexOf("@");
+        name = email.substring(0, endIndex);
+        System.out.println("inside");
+    }
+    else{
+        name = "John Doe";
+    }
+
+    // profile info
+    Map<String, Integer> thumbs = new HashMap<>();
+    thumbs.put("up", 10);
+    thumbs.put("down", 1);
+    Map<String, String> contactInfo = new HashMap<>();
+    contactInfo.put("Email", email);
+    String country = "US";
+
+    Profile profile1 = new Profile(name, thumbs, contactInfo, country);
 
     // return Profile as json string 
     Gson gson = new Gson();

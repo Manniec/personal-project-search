@@ -13,124 +13,161 @@
 // limitations under the License.
 
 
+// Author: Diego V.A.
+//Get the current url with the parameters:
+function getURL(){
+
+    const urlString = window.location.href;
+    const url = urlString.replace('.html', '');
+    return url;
+
+}
+
+// Author: David V.P.
+// Gets user_id param from URL
+function getUserIDFromURL(){
+    const url = window.location.search;
+    const urlParams = new URLSearchParams(url);
+    const user_id = urlParams.get('user_id');
+    return user_id;
+}
+
+// Author: David V.P.
 /** Fetches the profile from the server and adds them to the DOM. */
-function loadProfile() {
-    fetch('/profile').then(response => response.json()).then((profile) => {
+async function loadProfile() {
+    const url = getURL();
 
-        // initialize elements
-        const nameElement = document.getElementById("name");
-        const contactInfoElement = document.getElementById("contact-info");
-        const reviewListElement = document.getElementById("review-list");
+    const profile = await fetch(url).then(login => login.json());
+    console.log(profile);
+    console.log("inside")
 
-        // display profile
-        nameElement.innerText = profile.name;
-        console.log(profile.name);
-        contactInfoElement.innerHTML = profile.contactInfo.Email + "<br/>" + profile.contactInfo.Mobile;
-        console.log(profile.contactInfo.Email + "<br/>" + profile.contactInfo.Mobile);
-        contactInfoElement.display = "none";
+    // initialize elements
+    const nameElement = document.getElementById("name");
+    const contactInfoElement = document.getElementById("contact-info");
+    const reviewListElement = document.getElementById("review-list");
+    const thumbsDownElement = document.getElementById("thumbs-down");
+    const thumbsUpElement = document.getElementById("thumbs-up");
+    const loggingElement = document.getElementById("logging");
 
-        for (var i = 0; i < profile.reviews.length; i++) {
-            const reviewElement = document.createElement('li');
-            reviewElement.innerText = profile.reviews[i];
-            console.log(profile.reviews[i]);
-            reviewElement.className = 'horiz-center';
-            reviewListElement.appendChild(reviewElement);
+    // display profile
+    nameElement.innerText = profile.name;
+    console.log(profile.name);
+    
+    //  prepare user_id param in URL
+    const user_id = getUserIDFromURL();
+    const authURL = "/authentication?user_id=" + user_id; 
+
+    const auth = await fetch(authURL).then(auth => auth.json());
+    console.log(auth);
+    var isLoggedIn = (auth.isLoggedIn == 'true'); 
+
+    // if user is logged in, display logout link and contact info
+    // otherwise, display login link and ask user to login to see contact info
+    if(isLoggedIn){ 
+        console.log('logged-in');       
+        if(typeof profile.contactInfo.Email !== 'undefined'){
+            contactInfoElement.innerHTML = profile.contactInfo.Email;
+            console.log(profile.contactInfo.Email);
         }
-    });
+        loggingElement.innerText = "LOG OUT";
+        loggingElement.href = auth.logout;
+        contactInfoElement.display = "inline";
+    }else{
+        console.log('not logged-in');
+        loggingElement.innerText = "LOG IN";
+        loggingElement.href = auth.login;
+        contactInfoElement.innerHTML = "Login <a href=\"" + auth.login + "\">here</a> to see the contact info.";
+        contactInfoElement.display = "inline";
+    }
+    
 
-    // call other loading 
-    loggingIn();
+    thumbsDownElement.innerText = profile.thumbs.down;
+    thumbsUpElement.innerText = profile.thumbs.up;
+
     loadProjects();
 }
 
-/* displays contact info if logged in. otherwise, asks to log in*/
-function loggingIn(){
-    fetch('/authentication').then(response => response.json()).then((authentication) =>{
-        const contactInfoElement = document.getElementById("contact-info");
-        // const logoutElement = document.getElementById("logout");
-        const loggingElement = document.getElementById("logging");
 
-        var isLoggedIn = (authentication.isLoggedIn == 'true'); 
-        var loginUrl = authentication.login;
-        var logoutUrl = authentication.logout;
-        if(isLoggedIn){
-            loggingElement.innerText = "LOG OUT";
-            loggingElement.href = loginUrl;
-            contactInfoElement.display = "inline";
-
-        } else {
-            loggingElement.innerText = "LOG IN";
-            loggingElement.href = loginUrl;
-            contactInfoElement.innerHTML = "Login <a href=\"" + loginUrl + "\">here</a> to see the contact info.";
-            contactInfoElement.display = "inline";
-        }
-    });
-}
-
-/* Author: Diego V.A. */
+// Author: David V.P.
+// retrieves projects pertaining to user
 function loadProjects(){
-    fetch("/profile-projects").then(response => response.json()).then((projects) => {
 
-        //Get the div where the project cards are gonna be displayed:
-        const projectDisplay = document.getElementById("projects-display-section");
-        let currentProjectRow = document.createElement('div'); //Create the first row container.
-        let currentProjectRowContent = document.createElement('div'); //Create the first content container
-        //We need to keep a counter to know when to close a row and start a new one:
-        let counter = 0;
+    // creates URL for user projects request with user_id param
+    const user_id = getUserIDFromURL();
+    const projectsURL = "/profile-projects?user_id=" + user_id;
 
-        //CSS style:
-        currentProjectRow.className = "projects-row";
-        currentProjectRowContent.className = "content-row";
+    fetch(projectsURL).then(response => response.json()).then((projects) => {
 
-        //Iterates the JSON by keys:
-        for(let project of projects){
-
-            counter++;
-
-            //Create a card element with the current project values:
-            const currentProjectCard = buildProjectCard(project.title, project.tags, project.author, project.image);
-
-            //Add it to the current row:
-            currentProjectRowContent.appendChild(currentProjectCard);
-
-            //Only 3 elements per row:
-            if(counter % 3 == 0){
-
-                //Add the row to the DOM:
-                currentProjectRow.appendChild(currentProjectRowContent);
-                projectDisplay.appendChild(currentProjectRow);
-
-                //Create a new row and make it the current row:
-                currentProjectRow = document.createElement('div');
-                currentProjectRowContent = document.createElement('div');
-
-                //CSS style to the new row:
-                currentProjectRow.className = "projects-row";
-                currentProjectRowContent.className = "content-row";
-
-            }
-
-        }
-
-        //In case there is a number of projects that is not a multiple of 3, add the last row with the remaining cards:
-        if(counter % 3 != 0){
-
-            //Add the row to the DOM:
-            currentProjectRow.appendChild(currentProjectRowContent);
-            projectDisplay.appendChild(currentProjectRow);
-
-        }
+        renderProjects(projects);
 
     })
 
 }
 
+/* Author: Diego V.A. */
+//Function that renders the project cards:
+function renderProjects(projects){
+
+    //Get the div where the project cards are gonna be displayed:
+    const projectDisplay = document.getElementById("projects-display-section");
+    let currentProjectRow = document.createElement('div'); //Create the first row container.
+    let currentProjectRowContent = document.createElement('div'); //Create the first content container
+    //We need to keep a counter to know when to close a row and start a new one:
+    let counter = 0;
+
+    //CSS style:
+    currentProjectRow.className = "projects-row";
+    currentProjectRowContent.className = "content-row";
+
+    //Iterates the JSON by keys:
+    for(let project of projects){
+
+        counter++;
+
+        //Create a card element with the current project values:
+        const currentProjectCard = buildProjectCard(project.title, project.tags, project.author, project.image, counter);
+
+        //Add it to the current row:
+        currentProjectRowContent.appendChild(currentProjectCard);
+
+        //Only 3 elements per row:
+        if(counter % 3 == 0){
+
+            //Add the row to the DOM:
+            currentProjectRow.appendChild(currentProjectRowContent);
+            projectDisplay.appendChild(currentProjectRow);
+
+            //Create a new row and make it the current row:
+            currentProjectRow = document.createElement('div');
+            currentProjectRowContent = document.createElement('div');
+
+            //CSS style to the new row:
+            currentProjectRow.className = "projects-row";
+            currentProjectRowContent.className = "content-row";
+
+        }
+
+    }
+
+    //In case there is a number of projects that is not a multiple of 3, add the last row with the remaining cards:
+    if(counter % 3 != 0){
+
+        //Add the row to the DOM:
+        currentProjectRow.appendChild(currentProjectRowContent);
+        projectDisplay.appendChild(currentProjectRow);
+
+    }
+
+}
+
 // Author: Diego V.A.
 //Builds a project card element from the given parameter values:
-function buildProjectCard(title, tags, author, image){
+function buildProjectCard(title, tags, author, image, projectId){
 
     const projectCard = document.createElement('div');
     projectCard.className = "project-card";
+    //Set the function for when the project is clicked with the projectId being the index of that project on the cached results:
+    projectCard.onclick = function() {getSingleProject(projectId);};
 
     const cardImageDiv = document.createElement('div');
     cardImageDiv.className = "project-image-div";

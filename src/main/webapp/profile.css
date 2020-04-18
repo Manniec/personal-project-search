@@ -31,6 +31,18 @@ html, body {
 
 }
 
+.thumbs, .thumbs p, .thumbs{
+    margin-left: auto; 
+    margin-right: auto;
+    width: fit-content;
+    height: 50px;
+}
+
+
+#thumbs-img {
+    height: 25px;
+}
+
 #avatar {
 
     height: 175px;

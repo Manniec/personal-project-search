@@ -35,28 +35,37 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+// Author: David V.P.
 /** Servlet responsible for authenticating user's log in status. */
 @WebServlet("/authentication")
 public class AuthenticationServlet extends HttpServlet {
 
-  @Override
-  public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
-      UserService userService = UserServiceFactory.getUserService();
-      // initialize data
-      Boolean isLoggedIn = userService.isUserLoggedIn();
-      String redirectLink = "/profile.html";
-      String logoutUrl = userService.createLogoutURL(redirectLink);
-      String loginUrl = userService.createLoginURL(redirectLink);
-      HashMap<String, String> authentication = new HashMap<String, String>();
-      authentication.put("isLoggedIn", Boolean.toString(isLoggedIn));
-      authentication.put("logout", logoutUrl);
-      authentication.put("login", loginUrl); 
+    @Override
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        UserService userService = UserServiceFactory.getUserService();
 
-      //return data as JSON
-      Gson gson = new Gson();
-      String json = gson.toJson(authentication);
-      response.setContentType("application/json; charset=utf-8");
-      response.getWriter().println(json);
-  }
+        // gets user_id
+        String user_id = request.getParameter("user_id");
+
+        // initialize data
+        Boolean isLoggedIn = userService.isUserLoggedIn();
+        String redirectLink = "/profile.html?user_id=" + user_id; 
+        String logoutUrl = userService.createLogoutURL(redirectLink);
+        String loginUrl = userService.createLoginURL(redirectLink);
+        String userEmail = null;
+        if(isLoggedIn) userEmail = userService.getCurrentUser().getEmail();
+
+        HashMap<String, String> authentication = new HashMap<String, String>();
+        authentication.put("isLoggedIn", Boolean.toString(isLoggedIn));
+        authentication.put("logout", logoutUrl);
+        authentication.put("login", loginUrl); 
+        authentication.put("userEmail", userEmail);
+
+        //return data as JSON
+        Gson gson = new Gson();
+        String json = gson.toJson(authentication);
+        response.setContentType("application/json; charset=utf-8");
+        response.getWriter().println(json);
+    }
 
 }
