@@ -19,14 +19,15 @@ import java.util.*;
 public final class Profile {
 
   private final String name;
-  private final ArrayList<String> projectHistory;
-  private final ArrayList<String> reviews;
-  private final HashMap<String, String> contactInfo;
+  private final Map<String, Integer> thumbs;
+  private final Map<String, String> contactInfo;
+  private final String country;
 
-  public Profile(String name, ArrayList<String> projectHistory, ArrayList<String> reviews, HashMap<String, String> contactInfo) {
+
+  public Profile(String name, Map<String, Integer> thumbs, Map<String, String> contactInfo, String country) {
     this.name = name;
-    this.projectHistory = projectHistory;
-    this.reviews = reviews;
+    this.thumbs = thumbs;
     this.contactInfo = contactInfo;
+    this.country = country;
   }
 }
