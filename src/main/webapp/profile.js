@@ -40,6 +40,12 @@ async function loadProfile() {
     const profile = await fetch(url).then(login => login.json());
     console.log(profile);
     console.log("inside")
+    
+    //  prepare user_id param in URL, make auth call
+    const user_id = getUserIDFromURL();
+    const authURL = "/authentication?user_id=" + user_id; 
+    const auth = await fetch(authURL).then(auth => auth.json());
+    console.log(auth);
 
     // initialize elements
     const nameElement = document.getElementById("name");
@@ -53,14 +59,8 @@ async function loadProfile() {
     nameElement.innerText = profile.name;
     console.log(profile.name);
     
-    //  prepare user_id param in URL
-    const user_id = getUserIDFromURL();
-    const authURL = "/authentication?user_id=" + user_id; 
-
-    const auth = await fetch(authURL).then(auth => auth.json());
-    console.log(auth);
+ 
     var isLoggedIn = (auth.isLoggedIn == 'true'); 
-
     // if user is logged in, display logout link and contact info
     // otherwise, display login link and ask user to login to see contact info
     if(isLoggedIn){ 

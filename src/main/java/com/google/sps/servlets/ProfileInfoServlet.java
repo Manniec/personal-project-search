@@ -45,7 +45,7 @@ public class ProfileInfoServlet extends HttpServlet {
         System.out.println("inside");
     }
     else{
-        name = "John Doe";
+        name = "No Username";
     }
 
     // profile info
