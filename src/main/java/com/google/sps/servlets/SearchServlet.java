@@ -60,19 +60,23 @@ public class SearchServlet extends HttpServlet {
 
             //Get the properties of the entity:
             String title = (String) entity.getProperty("title");
-            String author = (String) entity.getProperty("author");
-            String collab = (String) entity.getProperty("collab");
-            String commitment = (String) entity.getProperty("commitment");
-            String difficulty = (String) entity.getProperty("difficulty");
+            String email = (String) entity.getProperty("owner_email");
+            String collab = (String) entity.getProperty("collabtype");
+            String commitment = (String) entity.getProperty("timecommit");
+            String difficulty = (String) entity.getProperty("ratediff");
             String language = (String) entity.getProperty("language");
-            String zone = (String) entity.getProperty("zone");
-            String image = (String) entity.getProperty("image");
+            String zone = (String) entity.getProperty("timezone");
+            //String image = (String) entity.getProperty("image");
+            String image = null;
+            long timestamp = (long) entity.getProperty("timestamp");
+            String description = (String) entity.getProperty("description");
+            String git = (String) entity.getProperty("giturl");
 
             //Create an array of tags to be displayed:
             String[] projectTagsList = {language, zone, difficulty, commitment, collab};
 
             //Create a SearchProject object with the entity properties:
-            SearchProject currentProject = new SearchProject(title, projectTagsList, author, null); //Image is set to null for the moment as it displays the default project image.
+            SearchProject currentProject = new SearchProject(title, projectTagsList, email, image, timestamp, description, git); //Image is set to null for the moment as it displays the default project image.
 
             //Add the current project to the ArrayList of projects:
             projects.add(currentProject);
@@ -97,19 +101,20 @@ public class SearchServlet extends HttpServlet {
 
         //Create test Project Entity with dummy values:
         Entity projectEntity = new Entity("Project");
-        projectEntity.setProperty("title", "The principles of quantum computation.");
-        projectEntity.setProperty("description", "This is a test description");    
+        projectEntity.setProperty("title", "Quantic computation in a potato");
+        projectEntity.setProperty("description", "This is a test description but its about potatos.");    
         projectEntity.setProperty("timestamp", System.currentTimeMillis());
         projectEntity.setProperty("giturl", "https://github.com/Manniec/personal-project-search");
-        projectEntity.setProperty("author", "Manuel Doe"); //This can be the username or email.
+        //projectEntity.setProperty("author", "Manuel Doe"); //This can be the username or email.
+        projectEntity.setProperty("owner_email", "james_may@gmail.com");
 
         //TAGS:
         projectEntity.setProperty("language", "English"); //In a future this can be an array of languages.
-        projectEntity.setProperty("zone", "Asia/Baku"); //Time Zone
-        projectEntity.setProperty("difficulty", "hard"); //Difficulty
-        projectEntity.setProperty("commitment", "1-3"); //Time commitment
-        projectEntity.setProperty("collab", "offline"); //Collaboration type
-        projectEntity.setProperty("image", "default"); //This is optional. Set to "default" to tell the JS to display the placeholder project image.
+        projectEntity.setProperty("timezone", "Europe/Amsterdam"); //Time Zone
+        projectEntity.setProperty("ratediff", "hard"); //Difficulty
+        projectEntity.setProperty("timecommit", "1-3"); //Time commitment
+        projectEntity.setProperty("collabtype", "online"); //Collaboration type
+        //projectEntity.setProperty("image", "default"); //This is optional. Set to "default" to tell the JS to display the placeholder project image.
 
         //Put the Entity in the datastore:
         datastore.put(projectEntity);
@@ -147,25 +152,25 @@ public class SearchServlet extends HttpServlet {
 
             if(!"".equals(zone)){
 
-                filters.add(new FilterPredicate("zone", FilterOperator.EQUAL, zone));
+                filters.add(new FilterPredicate("timezone", FilterOperator.EQUAL, zone));
 
             }
 
             if(difficulty != null){
 
-                filters.add(new FilterPredicate("difficulty", FilterOperator.EQUAL, difficulty));
+                filters.add(new FilterPredicate("ratediff", FilterOperator.EQUAL, difficulty));
 
             }
 
             if(timeCommitment != null){
 
-                filters.add(new FilterPredicate("commitment", FilterOperator.EQUAL, timeCommitment));
+                filters.add(new FilterPredicate("timecommit", FilterOperator.EQUAL, timeCommitment));
 
             }
 
             if(collabType != null){
 
-                filters.add(new FilterPredicate("collab", FilterOperator.EQUAL, collabType));
+                filters.add(new FilterPredicate("collabtype", FilterOperator.EQUAL, collabType));
 
             }
 
@@ -223,8 +228,8 @@ public class SearchServlet extends HttpServlet {
     //Filters the already filtered entities from the datastore query by it's title similarity to the searchBarText:
     private Iterable<Entity> fuzzySearch(String searchText, Iterable<Entity> entities){
 
-        //0 is completely equal. 100 is equal:
-        int threshold = 30;
+        //0 is completely different. 100 is equal:
+        final int threshold = 30;
 
         //ArrayList of projects that matched the free text search:
         ArrayList<Entity> matches = new ArrayList<Entity>();

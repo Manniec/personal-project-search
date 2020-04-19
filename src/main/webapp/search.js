@@ -1,3 +1,7 @@
+
+//Cache the latest searched projects:
+let currentProjects;
+
 //Function that renders the project cards:
 function renderProjects(projects){
 
@@ -18,7 +22,7 @@ function renderProjects(projects){
         counter++;
 
         //Create a card element with the current project values:
-        const currentProjectCard = buildProjectCard(project.title, project.tags, project.author, project.image);
+        const currentProjectCard = buildProjectCard(project.title, project.tags, project.author, project.image, counter);
 
         //Add it to the current row:
         currentProjectRowContent.appendChild(currentProjectCard);
@@ -60,6 +64,7 @@ function getProjects(){
 
     fetch(url).then(response => response.json()).then((projects) => {
 
+        currentProjects = projects;
         renderProjects(projects);
 
     });
@@ -89,10 +94,12 @@ function fillForm(bar){
 }
 
 //Builds a project card element from the given parameter values:
-function buildProjectCard(title, tags, author, image){
+function buildProjectCard(title, tags, author, image, projectId){
 
     const projectCard = document.createElement('div');
     projectCard.className = "project-card";
+    //Set the function for when the project is clicked with the projectId being the index of that project on the cached results:
+    projectCard.onclick = function() {getSingleProject(projectId);};
 
     const cardImageDiv = document.createElement('div');
     cardImageDiv.className = "project-image-div";
@@ -136,6 +143,59 @@ function buildProjectCard(title, tags, author, image){
 
 }
 
+function getSingleProject(projectId){
+
+    //Get the selected project from the latest cached search results:
+    const selectedProject = currentProjects[(projectId - 1)];
+
+    document.getElementById("popup-title").innerText = selectedProject.title;
+    document.getElementById("popup-author").innerText = selectedProject.author;
+    document.getElementById("popup-description").innerText = selectedProject.description;
+
+    document.getElementById("popup-tags").innerText = "";
+
+    const tags = selectedProject.tags;
+
+    //Append tags and show them:
+    for(let tag of tags){
+
+        document.getElementById("popup-tags").innerText += "#" + tag + " ";
+
+    }
+
+    //Set links and redirects:
+    document.getElementById("popup-github").onclick = function() {location.href = selectedProject.gitURL;};
+    document.getElementById("user_id").value = selectedProject.author;
+
+    //If the project has a personalized image, set it:
+    if(selectedProject.image != "default"){
+
+        document.getElementById("inner-image").src = "'" + selectedProject.image + "'";
+
+    }
+
+    //Show the modal:
+    document.getElementById("modal").style.display = "block";
+    
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+    
+        if (event.target == modal) {
+
+            modal.style.display = "none";
+        }
+
+    }
+
+}
+
+//Hides the Modal:
+function closePopUp(){
+
+    document.getElementById("modal").style.display = "none";
+
+}
+
 //redirects to create project only if logged in
 async function ifLoggedIn(){
     console.log('call auth servlet')
@@ -147,4 +207,5 @@ async function ifLoggedIn(){
         console.log('not logged-in');
         location.replace(login.login)       //redirect to login page
     }
+
 }

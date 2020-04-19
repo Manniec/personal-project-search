@@ -218,6 +218,7 @@ p {
     box-shadow: 3px 8px 8px 0px rgba(0, 0, 0, 0.3);
     margin-top: 20px;
     margin-left: 40px;
+    cursor: pointer;
 
 }
 
@@ -272,5 +273,176 @@ p {
         font-size: 20px;
 
     }
+
+}
+
+.modal-background {
+
+    display: none;
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+
+}
+
+.project-popup {
+
+    position: relative;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    height: fit-content;
+    width: fit-content;
+    background-color: white;
+    box-shadow: 3px 8px 8px 0px rgba(0, 0, 0, 0.3);
+    border-radius: 15px;
+    border: solid;
+    border-width: 0;
+    padding: 10px;
+    background-image: url(/searchImages/blueprintBackground.jpg);
+
+}
+
+.close {
+
+    color:white;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+
+}
+
+.close:hover,
+.close:focus {
+
+    color:#ffe529;
+    text-decoration: none;
+    cursor: pointer;
+
+}
+
+.id-hidden {
+
+    display: none;
+
+}
+
+.popup-image-div {
+
+    background-color: white;
+    width: 100%;
+    height: 60%;
+
+}
+
+.popup-image {
+
+    width: fit-content;
+    height: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+
+}
+
+.inner-image {
+
+    max-width: 10vw;
+
+}
+
+.popup-title {
+
+    margin-bottom: 0;
+    font-size: 28px;
+    color: white
+
+}
+
+.popup-author {
+
+    margin-top: 0;
+    color: #ffe529;
+    font-style: italic;
+    font-size: 13px;
+
+}
+
+.popup-description {
+
+    font-size: 20px;
+    text-align: center;
+    color: white;
+
+}
+
+.popup-tags {
+
+    font-size: 15px;
+    text-align: right;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5);
+
+}
+
+.popup-links {
+
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+
+}
+
+.popup-github {
+
+    width: fit-content;
+    border: none;
+    background: none;
+
+}
+
+.github-image {
+
+    cursor: pointer;
+
+}
+
+.popup-contact-div {
+
+    width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+
+}
+
+.contact-button{
+
+    border: solid;
+    border-width: 0;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    font-size: 25px;
+    font-weight: bold;
+    border-radius: 15px;
+    color: black;
+    background-color: #ffe529;
+    box-shadow: 3px 8px 8px 0px rgba(0, 0, 0, 0.3);
+
+}
+
+.contact-button:hover {
+
+    font-size: 30px;
+    color:white;
 
 }
