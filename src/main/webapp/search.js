@@ -200,12 +200,33 @@ function closePopUp(){
 async function ifLoggedIn(){
     console.log('call auth servlet')
     const login = await fetch('/authentication').then(login => login.json());
-    if(login.isLoggedIn){ //check if logged in
+
+    console.log(login);
+
+    if(login.isLoggedIn != "false"){ //check if logged in
         console.log('logged-in');
         location.replace("newproject.html") //redirect to newproject.html
     }else{
         console.log('not logged-in');
         location.replace(login.login)       //redirect to login page
+    }
+
+}
+
+async function redirectProfile(){
+
+    const login = await fetch('/authentication').then(login => login.json());
+
+    if(login.isLoggedIn != "false"){ //check if logged in
+        
+        console.log('logged-in');
+        location.replace("profile.html?user_id=" + login.userEmail) //redirect to newproject.html
+    
+    } else {
+        
+        console.log('not logged-in');
+        location.replace(login.login)       //redirect to login page
+    
     }
 
 }
