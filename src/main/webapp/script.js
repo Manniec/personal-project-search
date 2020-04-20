@@ -14,6 +14,8 @@
 
 /** Fetches tasks from the server and adds them to the DOM. */
 
+let currentUser;
+
 function onLoad(){
   ifLoggedIn(); //check if user is logged in and redirect to login page if not
   if( document.readyState !== 'loading' ) {
@@ -31,11 +33,15 @@ function onLoad(){
 async function ifLoggedIn(){
     console.log('call auth servlet')
     const login = await fetch('/authentication').then(login => login.json());
-    if(!login.isLoggedIn){ //check if logged in
+    if(login.isLoggedIn == 'false'){ //check if logged in
         location.replace(login.login)       //redirect to login page
     }else{
-        document.getElementById('user-email').innerHTML = `
-            <p>Creator: <a href= "mailto: displayemailhere@gmail.com"> displayemailhere@gmail.com</a></p>`
+
+        console.log(login);
+
+        currentUser = login.userEmail;
+
+        document.getElementById('user-email').innerHTML = "<p>Creator: <a href= 'mailto: " + login.userEmail + "'>" + login.userEmail + "</a></p>";
     }
 }
 
